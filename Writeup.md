@@ -63,6 +63,22 @@ Add customer_name and Customer_Zip to receipt: Modified receipt table to add cus
 
 Save Customer_Details: Added customer_deatails(customer_name, Customer_zip,customer_address) table to allow saving customer info in different table when customer added to receipt table. 
 
+```
+alter TABLE retail.receipts add 
+       customer_name text;
+
+alter table retail.receipts add
+       customer_zip text;
+
+create table if not exists retail.customer_details(
+customer_name text,
+customer_zip text,
+customer_address text,
+primary key((customer_name),customer_zip)
+);
+```
+
+
 #### Modify Jmx file to load customer info:
 
 1. Add two new CSV handles to load customer_name from 4000names.csv and Customer_zip from zicodes.csv.
