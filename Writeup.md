@@ -78,18 +78,7 @@ primary key((customer_name),customer_zip)
 );
 ```
 
-```
-cqlsh> select * from retail.customer_details limit 5;
 
- customer_name      | customer_zip | customer_address
---------------------+--------------+------------------
-     Ehtel Murakami |        55787 |             null
-       Kareem Crudo |        22150 |             null
- Mohammed Ebershoff |        43015 |             null
-     Denisse Herter |        01109 |             null
-    Jacklyn Scheets |        54455 |             null
-    
-```
 
 
 #### Modify Jmx file to load customer info:
@@ -104,5 +93,18 @@ JMX file location below:
 /retail/jmeter# ls
          scans.jmx
 ```
+```
+cqlsh> select * from retail.customer_details limit 5;
+
+ customer_name      | customer_zip | customer_address
+--------------------+--------------+------------------
+     Ehtel Murakami |        55787 |             null
+       Kareem Crudo |        22150 |             null
+ Mohammed Ebershoff |        43015 |             null
+     Denisse Herter |        01109 |             null
+    Jacklyn Scheets |        54455 |             null
+    
+```
+
 
  
