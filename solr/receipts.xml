@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema name="autoSolrSchema" version="1.5">
-    <!--
-    <types>
-        <fieldType class="org.apache.solr.schema.TrieLongField" name="TrieLongField"/>
-        <fieldType class="org.apache.solr.schema.TextField" name="TextField">
-            <analyzer>
-                <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.LowerCaseFilterFactory"/>
-            </analyzer>
-        </fieldType>
-        <fieldType class="com.datastax.bdp.search.solr.core.types.DecimalStrField" name="DecimalStrField"/>
-        <fieldType class="org.apache.solr.schema.UUIDField" name="UUIDField"/>
-        <fieldType class="org.apache.solr.schema.TrieIntField" name="TrieIntField"/>
-    </types>
-    -->
     <types>
         <fieldType name="string" class="solr.StrField"/>
         <fieldType name="text" class="solr.TextField">
@@ -40,15 +26,6 @@
         <field indexed="true" multiValued="false" name="customer_name" stored="true" type="text"/>
         <field indexed="true" multiValued="false" name="customer_zip" stored="true" type="text"/>
         <field indexed="true" multiValued="false" name="quantity" stored="true" type="int"/>
-        <!--
-        <field name="product_id"  type="string" indexed="true"  stored="true"/>
-        <field name="title"  type="text" indexed="true"  stored="true"/>
-        <field name="category_name"  type="string" indexed="true"  stored="true"/>
-        <field name="supplier_name"  type="string" indexed="true"  stored="true"/>
-        <field name="supplier_id"  type="int" indexed="true"  stored="true"/>
-        <field name="short_description"  type="text" indexed="true"  stored="true"/>
-        <field name="release_date" type="date" indexed="true" stored="true"/>
-        -->
     </fields>
 
     <defaultSearchField>product_name</defaultSearchField>
