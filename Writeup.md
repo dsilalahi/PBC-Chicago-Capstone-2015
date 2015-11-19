@@ -85,4 +85,11 @@ primary key((customer_name),customer_zip)
 2. modify scan-receipts insert script to include customer info using above random customer_name, customer_zip
 3. Add new insert handle to insert into customer_detail table whenever new customer (customer_name,zip) in receipts table
 
+JMX file location below:
+
+```
+/retail/jmeter# ls
+         scans.jmx
+```
+
  
