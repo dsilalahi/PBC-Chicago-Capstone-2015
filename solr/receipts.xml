@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema name="autoSolrSchema" version="1.5">
+    <types>
+        <fieldType class="org.apache.solr.schema.TrieLongField" name="TrieLongField"/>
+        <fieldType class="org.apache.solr.schema.TextField" name="TextField">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+        <fieldType class="com.datastax.bdp.search.solr.core.types.DecimalStrField" name="DecimalStrField"/>
+        <fieldType class="org.apache.solr.schema.UUIDField" name="UUIDField"/>
+        <fieldType class="org.apache.solr.schema.TrieIntField" name="TrieIntField"/>
+    </types>
+    <fields>
+        <field indexed="true" multiValued="false" name="receipt_id" stored="true" type="TrieLongField"/>
+        <field indexed="true" multiValued="false" name="product_name" stored="true" type="TextField"/>
+        <field indexed="true" multiValued="false" name="product_id" stored="true" type="TextField"/>
+        <field indexed="true" multiValued="false" name="unit_price" stored="true" type="DecimalStrField"/>
+        <field indexed="true" multiValued="false" name="scan_id" stored="true" type="UUIDField"/>
+        <field indexed="true" multiValued="false" name="total" stored="true" type="DecimalStrField"/>
+        <field indexed="true" multiValued="false" name="customer_name" stored="true" type="TextField"/>
+        <field indexed="true" multiValued="false" name="customer_zip" stored="true" type="TextField"/>
+        <field indexed="true" multiValued="false" name="quantity" stored="true" type="TrieIntField"/>
+    </fields>
+    <uniqueKey>(receipt_id,scan_id)</uniqueKey>
+</schema>
