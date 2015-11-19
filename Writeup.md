@@ -104,6 +104,22 @@ cqlsh> select * from retail.customer_details limit 5;
      Denisse Herter |        01109 |             null
     Jacklyn Scheets |        54455 |             null
     
+    
+    select * from retail.receipts limit 5;
+
+
+
+ receipt_id    | scan_id                              | credit_card_number | credit_card_type | receipt_timestamp        | receipt_total | register_id | store_id | customer_name | customer_zip | product_id   | product_name                                       | quantity | total  | unit_price
+---------------+--------------------------------------+--------------------+------------------+--------------------------+---------------+-------------+----------+---------------+--------------+--------------+----------------------------------------------------+----------+--------+------------
+ 1447975831933 | 8695af31-8f15-11e5-bcf9-8b496c707234 |      4929494253111 |             Visa | 2015-02-01 17:10:21+0000 |         589.9 |           6 |      164 |   Stan Totten |        84124 |       U3SP0E |              HP 5y Nbd Exch 95/75xx bal Mod FC SVC |        1 |  29.99 |      29.99
+ 1447975831933 | 86a05d91-8f15-11e5-bcf9-8b496c707234 |      4929494253111 |             Visa | 2015-02-01 17:10:21+0000 |         589.9 |           6 |      164 |   Stan Totten |        84124 |    714260130 |                     Massive Wall light 71426/01/30 |        4 | 279.96 |      69.99
+ 1447975831933 | 86aabdd1-8f15-11e5-bcf9-8b496c707234 |      4929494253111 |             Visa | 2015-02-01 17:10:21+0000 |         589.9 |           6 |      164 |   Stan Totten |        84124 |  DES-1210-52 |                  D-Link DES-1210-52 network switch |        3 | 179.97 |      59.99
+ 1447975831933 | 86b76801-8f15-11e5-bcf9-8b496c707234 |      4929494253111 |             Visa | 2015-02-01 17:10:21+0000 |         589.9 |           6 |      164 |   Stan Totten |        84124 | 33.TL701.006 |                     Acer 33.TL701.006 mounting kit |        2 |  99.98 |      49.99
+ 1447975830805 | 85eaa222-8f15-11e5-bcf9-8b496c707234 |      4716150002035 |             Visa | 2015-02-01 16:44:39+0000 |       1639.76 |          17 |      201 | Marlyn Nelder |        77354 |   ICFDS15IPS | Sony ICF-DS15iP Dock clock radio for iPod / iPhone |        3 | 119.97 |      39.99
+
+    
+    
+
 ```
 
 
