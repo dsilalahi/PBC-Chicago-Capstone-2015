@@ -1,7 +1,7 @@
 #!/bin/bash
 KEYSPACE=retail
 
-if [ "$1" == "-r" ] ; then
+if [ "${1,,}" == "-r" ] ; then
     ACTION=Reload
     shift
 else
