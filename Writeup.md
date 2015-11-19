@@ -57,17 +57,16 @@ http://localhost:8983/solr/retail.receipts/select?q=product_name%3ALG*&wt=json&i
 
 Inorder to reuse /retail/solr/add-schema.sh we got the XML file from the Solr Web interface and copied over into the /retail/solr directory
 
-=========================================
-Data Model Changes:
+#### Data Model Changes:
 
 Add customer_name and Customer_Zip to receipt: Modified receipt table to add customer_name and customer_zip to satisfy this.
 
 Save Customer_Details: Added customer_deatails(customer_name, Customer_zip,customer_address) table to allow saving customer info in different table when customer added to receipt table. 
-==========================================
-Modify Jmx file to load customer info:
+
+#### Modify Jmx file to load customer info:
 
 1. Add two new CSV handles to load customer_name from 4000names.csv and Customer_zip from zicodes.csv.
 2. modify scan-receipts insert script to include customer info using above random customer_name, customer_zip
 3. Add new insert handle to insert into customer_detail table whenever new customer (customer_name,zip) in receipts table
-===========================================
+
  
