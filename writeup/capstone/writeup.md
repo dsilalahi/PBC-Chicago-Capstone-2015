@@ -203,7 +203,7 @@ CREATE TABLE retail.state_to_state_fraud (
 ); 
 ```
 
-This was followed by the Spark Job to populate the data. Node in the below case we only select state to state comparison where the the numb of fraud occurance is greater than 100 (to further improve this we should use percentage)
+This was followed by the Spark Job to populate the data. Node in the below case we only select state to state comparison where the the number of fraud occurance is greater than 100 (to further improve this we should use percentage)
 ```
 val receipts_by_creditcard = sc.cassandraTable("retail","receipts_by_credit_card").select("receipt_id","credit_card_number","store_id","receipt_timestamp").keyBy(row => row.getString("store_id"))
 val stores =  sc.cassandraTable("retail","stores").select("store_id","state").keyBy(row => row.getString("store_id"))
