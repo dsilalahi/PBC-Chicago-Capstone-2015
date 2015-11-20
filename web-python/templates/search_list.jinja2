@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-      Solr Search on Title:<br>
+     Solr Search on Title:<br>
      <div id="solr_div">
 
     <form action="/web/search">
@@ -13,11 +13,11 @@
     </form>
     </div>
 <br>
-    <section>
-    <div id="facet" style="float:left;width:20%">
+<div class="row">
+  <div class="col-sm-3">
     Narrow Results By:<br><br>
-{% if categories %}
-  <h4>Category:</h4>
+    {% if categories %}
+    <h4>Category:</h4>
 
     <ul class="list-group">
         {% for category in categories %}
@@ -28,43 +28,46 @@
             <li class="list-group-item"><span class="badge">{{ category.amount}}</span> <a href="{{ makeURL("/web/search","s", search_term, "filter_by", new_filter_by) }}">{{ category.name }}:</a></li>
         {% endfor %}
     </ul>
-  <br>
-{% endif %}
-{% if suppliers %}
-  <b>Supplier:</b><br>
+    <br>
+    {% endif %}
+    {% if suppliers %}
+    <h4>Supplier:</h4>
 
-  {% for supplier in suppliers %}
-  {% set new_filter_by = 'supplier_name:"' + supplier.name + '"' %}
-  {% if filter_by %}
-    {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
-  {% endif %}
-
-  <a href="{{ makeURL("/web/search","s", search_term, "filter_by", new_filter_by) }}">{{ supplier.name }}:</a>&nbsp;{{ supplier.amount }}<br>
-  {% endfor %}
-{% endif %}
-
-    </div>
-    <div id="list_div" style="float:right;width:80%">
-        <br>
-        {{ products.brand_name }}
-        <table class="table-striped table-hover">
-        <th>Category</th>
-        <th>Brand</th>
-        <th>Title</th>
-        <th>Details</th>
-        {% if products %}
-            {% for product in products %}
-                <tr>
-                <td><a href="/web/product_search?category_name={{ product.category_name }}">{{ product.category_name }}</a></td>
-                <td><a href="/web/product_search?brand_id={{ product.supplier_id }}">{{ product.supplier_name }}</a></td>
-                <td>{{ product.title }}</td>
-                <td><a href="/web/product?product_id={{ product.product_id }}">details</a></td>
-                </tr>
-            {% endfor %}
+    <ul class="list-group">
+        {% for supplier in suppliers %}
+        {% set new_filter_by = 'supplier_name:"' + supplier.name + '"' %}
+        {% if filter_by %}
+        {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
         {% endif %}
-        </table>
+        <li class="list-group-item"><span class="badge">{{ supplier.amount }}</span> <a href="{{ makeURL("/web/search","s", search_term, "filter_by", new_filter_by) }}">{{ supplier.name }}:</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+  </div>
+  <div class="col-sm-9">
+
+    {{ products.brand_name }}
+    <table class="table table-striped table-hover">
+    <th>Category</th>
+    <th>Brand</th>
+    <th>Title</th>
+    <th>Details</th>
+    {% if products %}
+        {% for product in products %}
+            <tr>
+            <td><a href="/web/product_search?category_name={{ product.category_name }}">{{ product.category_name }}</a></td>
+            <td><a href="/web/product_search?brand_id={{ product.supplier_id }}">{{ product.supplier_name }}</a></td>
+            <td>{{ product.title }}</td>
+            <td><a href="/web/product?product_id={{ product.product_id }}">details</a></td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+
+  </div>
 </div>
-</section>
+
 {% endblock %}
 
 {% block tail %}

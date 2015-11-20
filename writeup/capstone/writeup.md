@@ -122,5 +122,48 @@ cqlsh> select * from retail.customer_details limit 5;
 
 ```
 
+###Spark Fraud Detection
 
+
+```
+cqlsh:retail> select credit_card_number,store_id from retail.receipts_by_credit_card where credit_card_number=5383439216820189;
+
+ credit_card_number | store_id
+--------------------+----------
+   5383439216820189 |       76
+   5383439216820189 |      235
+   5383439216820189 |      210
+   5383439216820189 |      356
+   5383439216820189 |      218
+   5383439216820189 |      354
+   5383439216820189 |      152
+   5383439216820189 |       88
+   5383439216820189 |      122
+   5383439216820189 |      336
+   5383439216820189 |      263
+   5383439216820189 |      301
+   5383439216820189 |      127
+
+(13 rows)
+cqlsh:retail> select state from retail.stores where store_id=76;
+
+ state
+-------
+    CT
+
+(1 rows)
+cqlsh:retail> select state from retail.stores where store_id=263;
+
+ state
+-------
+    AL
+
+(1 rows)
+cqlsh:retail> select state from retail.stores where store_id=88;
+
+ state
+-------
+    NY
+
+'''
  
