@@ -1,9 +1,9 @@
 # The Black Friday project contains 4 major parts.
 
 The writeup can be found here:
-```
-	https://github.com/dsilalahi/PBC-Chicago-Capstone-2015/blob/master/writeup/capstone/writeup.md
-```
+
+[Writeup](https://github.com/dsilalahi/PBC-Chicago-Capstone-2015/blob/master/writeup/capstone/writeup.md)	
+
 
 The first is in the cql directory that sets up the database schema for the entire project.
 ```
