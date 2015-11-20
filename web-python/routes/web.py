@@ -43,7 +43,6 @@ def search_for_products():
 
     return render_template('product_list.jinja2', products = results)
 
-
 @web_api.route('/product')
 def find_product_by_id():
 
@@ -130,9 +129,49 @@ def search():
                            products = results,
                            filter_by = filter_by)
 
+@web_api.route('/search-receipts')
+def search_receipts():
+    # this will search all the receipts that contain a given product title (word/pattern)
+
+    search_term = request.args.get('s')
+
+    if not search_term:
+        return render_template('search_receipts_list.jinja2',
+                               receipts = None)
+
+    filter_by = request.args.get('filter_by')
+
+    # parameters to solr are rows=300  wt (writer type)=json, and q=city:<keyword> sort=zipcode asc
+    # note: escape quote any quotes that are part of the query / filter query
+    solr_query = '"q":"product_name:%s"' % search_term.replace('"','\\"').encode('utf-8')
+
+    if filter_by:
+        solr_query += ',"fq":"%s"' % filter_by.replace('"','\\"').encode('utf-8')
+
+    query = "SELECT * FROM receipts WHERE solr_query = '{%s}' LIMIT 300" % solr_query
+
+    # get the response
+    results = cassandra_helper.session.execute(query)
+
+    facet_query = 'SELECT * FROM receipts WHERE solr_query = ' \
+                  '\'{%s,"facet":{"field":["customer_zip","product_name"]}}\' ' % solr_query
+
+    facet_results = cassandra_helper.session.execute(facet_query)
+    facet_string = facet_results[0].get("facet_fields")
+
+    # convert the facet string to an ordered dict because solr sorts them desceding by count, and we like it!
+    facet_map = json.JSONDecoder(object_pairs_hook=OrderedDict).decode(facet_string)
+
+    return render_template('search_receipts_list.jinja2',
+                           search_term = search_term,
+                           products = filter_facets(facet_map['product_name']),
+                           zips = filter_facets(facet_map['customer_zip']),
+                           receipts = results,
+                           filter_by = filter_by)
+
 #
 # The facets come in a list [ 'value1', 10, 'value2' 5, ...] with numbers in descending order
-# We convert it to a list of [('value1',10), ('value2',5) ... ]
+# We convert it to a list of [('value1',10), ('value2',5) ... ]           name
 #
 def filter_facets(raw_facets):
     # keep only the facets that have > 0 items
