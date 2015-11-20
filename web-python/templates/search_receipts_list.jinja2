@@ -25,7 +25,7 @@
     {% set new_filter_by = filter_by + " AND " + new_filter_by %}
   {% endif %}
 
-  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}:</a>&nbsp;{{ p.name}}<br>
+  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a>&nbsp;( {{ p.amount}} )<br>
   {% endfor %}
   <br>
 {% endif %}
