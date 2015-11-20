@@ -1,19 +1,27 @@
 # The Black Friday project contains 4 major parts.
 
 The writeup can be found here:
+```
 	https://github.com/dsilalahi/PBC-Chicago-Capstone-2015/blob/master/writeup/capstone/writeup.md
+```
 
 The first is in the cql directory that sets up the database schema for the entire project.
+```
 cql/
 	cust_info.cql
+```
 
 The second part is a sample Spark job
+```
 https://github.com/dsilalahi/PBC-Chicago-Capstone-2015/tree/master/spark/src/main/scala
 	CreditFraudDetection.scala
+```
 
 The third  part is a sample Solr schema with a script to post it
+```
 https://github.com/dsilalahi/PBC-Chicago-Capstone-2015/tree/master/solr
 	receipts.xml
+```
 
 The fourth part is the web project in the web directory that is a simple Python / Flask project that runs against a local DSE. This expects that you have a local DSE setup and running.
 
