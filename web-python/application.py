@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config.from_pyfile('application.cfg')
 
 # Set up logging
-app.logger.setLevel(logging.INFO)  # use the native logger of flask
+app.logger.setLevel(logging.DEBUG)  # use the native logger of flask
 app.logger.disabled = False
 handler = logging.StreamHandler(sys.stdout)
 
@@ -40,8 +40,8 @@ app.jinja_env.globals.update(makeURL=makeURL)
 
 def start():
     init_cassandra(app.config['DSE_CLUSTER'].split(','), app.config['KEYSPACE'])
-    web.init()
 
+    app.debug = True
     app.run(host='0.0.0.0',
             port=app.config['APPLICATION_PORT'],
             use_reloader=True,
