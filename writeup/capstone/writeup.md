@@ -61,7 +61,7 @@ Ran the query using Solr Rest API and confirmed that we got the results as expec
 http://localhost:8983/solr/retail.receipts/select?q=product_name%3ALG*&wt=json&indent=true
 ```
 
-```
+```json
 {
   "responseHeader": {
     "status": 0,
@@ -107,7 +107,7 @@ In order to reuse /retail/solr/add-schema.sh we got the XML file from the Solr W
 
 
 In the web-python project, we created/updated the following files to demo the solr search for receipts
-- web-python/routes/web.py (controller to pull data from the data source)
+- web-python/routes/web.py (controller that pulls data from the data source)
 - web-python/templates/search_receipts_list.jinja2 (a new jinja file in the view layer)
 
 
@@ -127,7 +127,7 @@ CREATE TABLE retail.credit_card_fraud_list (
 ```
 
 After which the spark code we developed to load the data
-```
+```java
 val receipts_by_creditcard = sc.cassandraTable("retail","receipts_by_credit_card").select("receipt_id","credit_card_number","store_id","receipt_timestamp").keyBy(row => row.getString("store_id"))
 val stores =  sc.cassandraTable("retail","stores").select("store_id","state").keyBy(row => row.getString("store_id"))
 val creditcard_by_store = receipts_by_creditcard.join(stores).persist()
@@ -140,7 +140,7 @@ sc.parallelize(creditcard_fraud.toList).saveToCassandra("retail","credit_card_fr
 ##### Spark Fraud Detection
 
 
-```
+```sql
 cqlsh:retail> select credit_card_number,store_id from retail.receipts_by_credit_card where credit_card_number=5383439216820189;
 
  credit_card_number | store_id
@@ -183,7 +183,7 @@ cqlsh:retail> select state from retail.stores where store_id=88;
 
 Finally in order to display the data we added the following code in the index.jinja2 template
 
-```
+```html
 <li>
 	<a href="/gcharts/Table/?url=/api/simplequery&q=select * from credit_card_fraud_list limit 100&order_col=credit_card_number">
 	    Google Charts: Table of Fraudulent Credit Card
@@ -194,7 +194,7 @@ Finally in order to display the data we added the following code in the index.ji
 ##### State to State Fraud Analysis
 
 Again we started out by creating the underlying table that Spark would populate and the web application would use
-```
+```sql
 CREATE TABLE retail.state_to_state_fraud (
    state1 text,
    state2 text,   
@@ -218,7 +218,7 @@ sc.parallelize(state2state_fraud_filter.toList).saveToCassandra("retail","state_
 
 And lastly we updated index.jinja2 template to be able to use the link
 
-```
+```html
 <li>
     <a href="/gcharts/Sankey/?options={height:500,width:1000,sankey:{node:{colors:['%23a6cee3', '%23b2df8a', '%23fb9a99', '%23fdbf6f','%23cab2d6', '%23ffff99', '%231f78b4', '%2333a02c']},link:{colorMode:'gradient',colors:['%23a6cee3', '%23b2df8a', '%23fb9a99', '%23fdbf6f','%23cab2d6', '%23ffff99', '%231f78b4', '%2333a02c']}}}&url=/api/simplequery&q=select state1,state2,num_fraud from state_to_state_fraud">
         Google Charts: Fraudulent Credit Usage Between States
@@ -255,11 +255,11 @@ primary key((customer_name),customer_zip)
 
 JMX file location below:
 
-```
+```xml
 /retail/jmeter# ls
          scans.jmx
 ```
-```
+```sql
 cqlsh> select * from retail.customer_details limit 5;
 
  customer_name      | customer_zip | customer_address
@@ -284,8 +284,6 @@ cqlsh> select * from retail.customer_details limit 5;
  1447975830805 | 85eaa222-8f15-11e5-bcf9-8b496c707234 |      4716150002035 |             Visa | 2015-02-01 16:44:39+0000 |       1639.76 |          17 |      201 | Marlyn Nelder |        77354 |   ICFDS15IPS | Sony ICF-DS15iP Dock clock radio for iPod / iPhone |        3 | 119.97 |      39.99
 
     
-    
-
 ```
 
 
