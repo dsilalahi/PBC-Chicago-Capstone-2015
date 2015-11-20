@@ -203,7 +203,7 @@ CREATE TABLE retail.state_to_state_fraud (
 ); 
 ```
 
-This was followed by the Spark Job to populate the data
+This was followed by the Spark Job to populate the data. Node in the below case we only select state to state comparison where the the numb of fraud occurance is greater than 100 (to further improve this we should use percentage)
 ```
 val receipts_by_creditcard = sc.cassandraTable("retail","receipts_by_credit_card").select("receipt_id","credit_card_number","store_id","receipt_timestamp").keyBy(row => row.getString("store_id"))
 val stores =  sc.cassandraTable("retail","stores").select("store_id","state").keyBy(row => row.getString("store_id"))
@@ -212,7 +212,7 @@ val creditcard_by_store = receipts_by_creditcard.join(stores).persist()
 val creditcard_by_store_unpacked = creditcard_by_store.map({case (store_id,(result1, result2)) => (result1.getString("credit_card_number"), result2.getString("state"))})
 val creditcard_by_store_self_join = creditcard_by_store_unpacked.join(creditcard_by_store_unpacked)
 val state2state_fraud = creditcard_by_store_self_join.map{case (store_id,(state1, state2)) => ((state1,state2),store_id)}.filter{ case ((state1,state2),store_id) => state1 != state2}.countByKey().filter{ case (k,v) => v > 1}.map{ case ((state1,state2),num_fraud) => (state1,state2 + "_",num_fraud)}
-val state2state_fraud_filter = state2state_fraud.filter( t => filter(t._3 > 100))
+val state2state_fraud_filter = state2state_fraud.(t => t._3 > 100)
 sc.parallelize(state2state_fraud_filter.toList).saveToCassandra("retail","state_to_state_fraud",SomeColumns("state1","state2","num_fraud"))
 ```
 
