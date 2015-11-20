@@ -1,6 +1,7 @@
 import com.datastax.spark.connector._
 import org.apache.spark.{SparkConf, SparkContext}
 
+//the object is used to load credit cards that have been used in two state or more
 object CreditFraudDetection {
   def main(args: Array[String]) {
 
