@@ -4,12 +4,12 @@
 {% endblock %}
 
 {% block body %}
-      Solr Search on Product Name:<br>
+     Solr Search on Product Name:<br>
      <div id="solr_div">
 
     <form action="/web/search-receipts">
-      <input type="text" name="s">
-      <input type="submit" value="Search">
+      <input type="text" name="s" class="glyphicon search">
+      <input type="submit" value="Search" class="btn-primary">
     </form>
     </div>
 <br>
@@ -17,16 +17,18 @@
     <div id="facet" style="float:left;width:20%">
     Narrow Results By:<br><br>
 {% if products %}
-  <b>Product:</b><br>
 
-  {% for p in products %}
-  {% set new_filter_by = 'product_name:"' + p.name + '"'%}
-  {% if filter_by %}
-    {% set new_filter_by = filter_by + " AND " + new_filter_by %}
-  {% endif %}
+    <h4>Product:</h4>
 
-  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a>&nbsp;( {{ p.amount}} )<br>
-  {% endfor %}
+   <ul class="list-group">
+      {% for p in products %}
+      {% set new_filter_by = 'product_name:"' + p.name + '"'%}
+      {% if filter_by %}
+        {% set new_filter_by = filter_by + " AND " + new_filter_by %}
+      {% endif %}
+        <li class="list-group-item"><span class="badge">{{ p.amount}}</span> <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a></li>
+      {% endfor %}
+    </ul>
   <br>
 {% endif %}
 {% if zips %}

@@ -9,7 +9,7 @@
 
     <form action="/web/search">
       <input type="text" name="s">
-      <input type="submit" value="Search">
+      <input type="submit" value="Search" class="btn-primary">
     </form>
     </div>
 <br>
@@ -17,16 +17,17 @@
     <div id="facet" style="float:left;width:20%">
     Narrow Results By:<br><br>
 {% if categories %}
-  <b>Category:</b><br>
+  <h4>Category:</h4>
 
-  {% for category in categories %}
-  {% set new_filter_by = 'category_name:"' + category.name + '"'%}
-  {% if filter_by %}
-    {% set new_filter_by = filter_by + " AND " + new_filter_by %}
-  {% endif %}
-
-  <a href="{{ makeURL("/web/search","s", search_term, "filter_by", new_filter_by) }}">{{ category.name }}:</a>&nbsp;{{ category.amount}}<br>
-  {% endfor %}
+    <ul class="list-group">
+        {% for category in categories %}
+        {% set new_filter_by = 'category_name:"' + category.name + '"'%}
+        {% if filter_by %}
+        {% set new_filter_by = filter_by + " AND " + new_filter_by %}
+        {% endif %}
+            <li class="list-group-item"><span class="badge">{{ category.amount}}</span> <a href="{{ makeURL("/web/search","s", search_term, "filter_by", new_filter_by) }}">{{ category.name }}:</a></li>
+        {% endfor %}
+    </ul>
   <br>
 {% endif %}
 {% if suppliers %}
@@ -46,7 +47,7 @@
     <div id="list_div" style="float:right;width:80%">
         <br>
         {{ products.brand_name }}
-        <table border="1" class="table-striped table-hover">
+        <table class="table-striped table-hover">
         <th>Category</th>
         <th>Brand</th>
         <th>Title</th>
