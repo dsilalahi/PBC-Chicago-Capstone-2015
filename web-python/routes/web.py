@@ -4,10 +4,11 @@ from helpers import cassandra_helper
 import json
 import sys
 
-#from rest import session
+# from rest import session
 from collections import namedtuple
 
 web_api = Blueprint('web_api', __name__)
+
 
 def init():
     global get_receipt_by_id_stmt
@@ -47,7 +48,6 @@ def search_for_products():
     except:
         e = sys.exc_info()[1]
         print "Error: %s" % e
-        #get_flashed_messages(True, "Error: %s" % e)
 
     return render_template('product_list.jinja2', products = results)
 
@@ -84,7 +84,7 @@ def find_receipt_by_id():
         if receipt_id is not None:
             results = cassandra_helper.session.execute(get_receipt_by_id_stmt,[long(receipt_id)])
     except:
-        e = sys.exc_info()[0]
+        e = sys.exc_info()[1]
         print "Error: %s" % e
 
     return render_template('receipt_detail.jinja2', scans = results)
