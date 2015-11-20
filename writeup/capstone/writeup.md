@@ -1,20 +1,57 @@
 ### Capstone Tasks
 
 #### Team
-<ol>
-        <li> Hamdan Ahmad </li>
-        <li> Dohar Silalahi </li>
-        <li> Ravi Akkineni </li>
-</ol>
+* Hamdan Ahmad
+* Dohar Silalahi
+* Ravi Akkineni
 
 #### Solr Excercise
 
 ##### Creating the Solr Index
 
-Create an index on retail.receipts casasndra table
-```
+Create an index on retail.receipts cassandra table
+```sh
 dsetool create_core retail.receipts generateResources=true reindex=true 
 ```
+
+Receipts XML
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema name="autoSolrSchema" version="1.5">
+    <types>
+        <fieldType name="string" class="solr.StrField"/>
+        <fieldType name="text" class="solr.TextField">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+        <fieldType name="int"     class="solr.IntField"/>
+        <fieldType name="uuid"    class="solr.UUIDField"/>
+        <fieldType name="decimal" class="com.datastax.bdp.search.solr.core.types.DecimalStrField"/>
+        <fieldType name="long"    class="solr.SortableLongField"/>
+        <fieldType name="float"   class="solr.SortableFloatField"/>
+        <fieldType name="date"    class="org.apache.solr.schema.TrieDateField"/>
+    </types>
+
+    <fields>
+        <field indexed="true" multiValued="false" name="receipt_id" stored="true" type="long"/>
+        <field indexed="true" multiValued="false" name="product_name" stored="true" type="text"/>
+        <field indexed="true" multiValued="false" name="product_id" stored="true" type="string"/>
+        <field indexed="true" multiValued="false" name="unit_price" stored="true" type="decimal"/>
+        <field indexed="true" multiValued="false" name="scan_id" stored="true" type="uuid"/>
+        <field indexed="true" multiValued="false" name="total" stored="true" type="decimal"/>
+        <field indexed="true" multiValued="false" name="customer_name" stored="true" type="text"/>
+        <field indexed="true" multiValued="false" name="customer_zip" stored="true" type="text"/>
+        <field indexed="true" multiValued="false" name="quantity" stored="true" type="int"/>
+    </fields>
+
+    <defaultSearchField>product_name</defaultSearchField>
+    <uniqueKey>(receipt_id, scan_id)</uniqueKey>
+</schema>
+```
+
+
 Ran the query using Solr Rest API and confirmed that we got the results as expected
 ```http
 http://localhost:8983/solr/retail.receipts/select?q=product_name%3ALG*&wt=json&indent=true
