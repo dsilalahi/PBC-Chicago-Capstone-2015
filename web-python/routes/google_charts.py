@@ -11,7 +11,8 @@ supported_charts = {
     'ColumnChart': 'corechart',
     'LineChart': 'corechart',
     'PieChart': 'corechart',
-    'AreaChart': 'corechart'
+    'AreaChart': 'corechart',
+    'Sankey': 'sankey'
 }
 
 #
