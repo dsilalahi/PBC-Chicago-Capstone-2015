@@ -73,7 +73,7 @@ In order to complete the requested task we had to create a spark job in order to
 
 To start off we created the table the data is stored on
 
-```
+```sql
 CREATE TABLE retail.credit_card_fraud_list (
    credit_card_number bigint,
    num_distinct_state int,
