@@ -171,9 +171,10 @@ cqlsh:retail> select state from retail.stores where store_id=88;
  state
 -------
     NY
-'''
+```
 
 Finally in order to display the data we added the following code in the index.jinja2 template
+
 ```
 <li>
 	<a href="/gcharts/Table/?url=/api/simplequery&q=select * from credit_card_fraud_list limit 100&order_col=credit_card_number">
