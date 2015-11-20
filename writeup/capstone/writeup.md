@@ -129,7 +129,7 @@ val creditcard_fraud= creditcard_by_store.map{ case (store_id,(result1,result2))
 sc.parallelize(creditcard_fraud.toList).saveToCassandra("retail","credit_card_fraud_list",SomeColumns("credit_card_number","num_distinct_state"))
 ```
 
-###Spark Fraud Detection
+##### Spark Fraud Detection
 
 
 ```
