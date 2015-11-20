@@ -20,7 +20,6 @@
         <field indexed="true" multiValued="false" name="receipt_id" stored="true" type="long"/>
         <field indexed="true" multiValued="false" name="product_name" stored="true" type="text"/>
         <field indexed="true" multiValued="false" name="product_id" stored="true" type="string"/>
-        <field indexed="true" multiValued="false" name="unit_price" stored="true" type="decimal"/>
         <field indexed="true" multiValued="false" name="scan_id" stored="true" type="uuid"/>
         <field indexed="true" multiValued="false" name="total" stored="true" type="decimal"/>
         <field indexed="true" multiValued="false" name="customer_name" stored="true" type="text"/>
