@@ -4,23 +4,23 @@
 {% endblock %}
 
 {% block body %}
-     Solr Search on Product Name:<br>
-     <div id="solr_div">
+    Solr Search on Product Name:<br>
+    <div id="solr_div">
 
     <form action="/web/search-receipts">
-      <input type="text" name="s" class="glyphicon search">
-      <input type="submit" value="Search" class="btn-primary">
+        <input type="text" name="s" class="glyphicon search">
+        <input type="submit" value="Search" class="btn-primary">
     </form>
     </div>
 <br>
-    <section>
-    <div id="facet" style="float:left;width:20%">
-    Narrow Results By:<br><br>
-{% if products %}
+<div class="row">
+    <div class="col-sm-3">
 
+    Narrow Results By:<br><br>
+    {% if products %}
     <h4>Product:</h4>
 
-   <ul class="list-group">
+    <ul class="list-group">
         {% for p in products %}
         {% set new_filter_by = 'product_name:"' + p.name + '"'%}
         {% if filter_by %}
@@ -29,11 +29,11 @@
         <li class="list-group-item"><span class="badge">{{ p.amount}}</span> <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a></li>
         {% endfor %}
     </ul>
-  <br>
-{% endif %}
-{% if zips %}
-    <h4>Zip:</h4>
+    <br>
+    {% endif %}
 
+    {% if zips %}
+    <h4>Zip:</h4>
     <ul class="list-group">
         {% for z in zips %}
         {% set new_filter_by = 'customer_zip:"' + z.customer_zip + '"' %}
@@ -44,13 +44,11 @@
         {% endfor %}
     </ul>
 
-{% endif %}
-
-    </div>
-    <div id="list_div" style="float:right;width:80%">
-        <br>
+    {% endif %}
+  </div>
+  <div class="col-sm-9">
         {{ receipts.product_name }}
-        <table class="table-striped table-hover">
+        <table width="1000" class="table table-striped table-hover">
         <th>Product</th>
         <th>Receipt</th>
         <th>Total</th>
@@ -67,8 +65,9 @@
             {% endfor %}
         {% endif %}
         </table>
+    </div>
 </div>
-</section>
+
 {% endblock %}
 
 {% block tail %}
