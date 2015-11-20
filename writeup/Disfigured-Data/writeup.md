@@ -1,11 +1,9 @@
 # Data Profiling
 
 #### Team
-<ol>
-        <li> Hamdan Ahmad </li>
-        <li> Dohar Silalahi </li>
-        <li> Ravi Akkineni </li>
-</ol>
+* Hamdan Ahmad
+* Dohar Silalahi
+* Ravi Akkineni
 
 ## Plan of attack
 The team started off analyzing the existing data model and profiling the data. We went through the existing ddl structure and ran sql queries to get sample result back to get a better understanding of the data. Using this knowledge we brainstormed on how the data model should look like
