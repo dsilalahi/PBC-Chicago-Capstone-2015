@@ -1,6 +1,9 @@
 The Black Friday project contains 4 major parts.
 
 The first is in the cql directory that sets up the database schema for the entire project.
+cql/
+	cust_info.cql
+	
 
 The second part is a sample Spark job
 

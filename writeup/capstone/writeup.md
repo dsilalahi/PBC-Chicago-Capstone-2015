@@ -14,7 +14,7 @@ Create an index on retail.receipts cassandra table
 dsetool create_core retail.receipts generateResources=true reindex=true 
 ```
 
-Receipts XML
+Update the Receipts XML types section
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema name="autoSolrSchema" version="1.5">
@@ -105,10 +105,51 @@ http://localhost:8983/solr/retail.receipts/select?q=product_name%3ALG*&wt=json&i
 
 In order to reuse /retail/solr/add-schema.sh we got the XML file from the Solr Web interface and copied over into the /retail/solr directory
 
+Update controller in web-python/routes/web.py:
+```python
+@web_api.route('/search-receipts')
+def search_receipts():
+    # this will search all the receipts that contain a given product title (word/pattern)
 
-In the web-python project, we created/updated the following files to demo the solr search for receipts
-- web-python/routes/web.py (controller that pulls data from the data source)
-- web-python/templates/search_receipts_list.jinja2 (a new jinja file in the view layer)
+    search_term = request.args.get('s')
+
+    if not search_term:
+        return render_template('search_receipts_list.jinja2',
+                               receipts = None)
+
+    filter_by = request.args.get('filter_by')
+
+    # parameters to solr are rows=300  wt (writer type)=json, and q=city:<keyword> sort=zipcode asc
+    # note: escape quote any quotes that are part of the query / filter query
+    solr_query = '"q":"product_name:%s"' % search_term.replace('"','\\"').encode('utf-8')
+
+    if filter_by:
+        solr_query += ',"fq":"%s"' % filter_by.replace('"','\\"').encode('utf-8')
+
+    query = "SELECT * FROM receipts WHERE solr_query = '{%s}' LIMIT 300" % solr_query
+
+    # get the response
+    results = cassandra_helper.session.execute(query)
+
+    facet_query = 'SELECT * FROM receipts WHERE solr_query = ' \
+                  '\'{%s,"facet":{"field":["product_name", "customer_zip"]}}\' ' % solr_query
+
+    facet_results = cassandra_helper.session.execute(facet_query)
+    facet_string = facet_results[0].get("facet_fields")
+
+    # convert the facet string to an ordered dict because solr sorts them desceding by count, and we like it!
+    facet_map = json.JSONDecoder(object_pairs_hook=OrderedDict).decode(facet_string)
+
+    return render_template('search_receipts_list.jinja2',
+                           search_term = search_term,
+                           products = filter_facets(facet_map['product_name']),
+                           zips = filter_facets(facet_map['customer_zip']),
+                           receipts = results,
+                           filter_by = filter_by)
+```
+
+Create a new jinja2 template to view the receipts search by product name: 
+- web-python/templates/search_receipts_list.jinja2
 
 
 #### Spark Excercise
