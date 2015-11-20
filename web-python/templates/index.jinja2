@@ -55,9 +55,19 @@
                     Google Charts: Area Chart of Sales By Date
                 </a>
             </li>
+            <li>
+                <a href="/gcharts/Table/?url=/api/simplequery&q=select * from receipts_by_credit_card limit 100&order_col=store_id">
+                    Google Charts: Table of Receipts Example
+                </a>
+            </li>
+            <li>
+                <a href="/gcharts/Table/?url=/api/simplequery&q=select * from credit_card_fraud_list limit 100&order_col=credit_card_number">
+                    Google Charts: Table of Fraudulent Credit Card
+                </a>
+            </li>
         <li>
-            <a href="/gcharts/Table/?url=/api/simplequery&q=select * from receipts_by_credit_card limit 100&order_col=store_id">
-                Google Charts: Table of Receipts Example
+            <a href="/gcharts/Sankey/?url=/api/simplequery&q=select state1,state2,num_fraud from state_to_state_fraud limit 5">
+                Google Charts: Fraudulent Credit Usage Between States
             </a>
         </li>
         </ul>
