@@ -51,6 +51,10 @@ Receipts XML
 </schema>
 ```
 
+Add/reload solr index by running:
+```sh
+./add-schema.sh -r receipts
+```
 
 Ran the query using Solr Rest API and confirmed that we got the results as expected
 ```http
@@ -99,8 +103,12 @@ http://localhost:8983/solr/retail.receipts/select?q=product_name%3ALG*&wt=json&i
       },
 ```
 
-Inorder to reuse /retail/solr/add-schema.sh we got the XML file from the Solr Web interface and copied over into the /retail/solr directory
+In order to reuse /retail/solr/add-schema.sh we got the XML file from the Solr Web interface and copied over into the /retail/solr directory
 
+
+In the web-python project, we created/updated the following files to demo the solr search for receipts
+- web-python/routes/web.py (controller to pull data from the data source)
+- web-python/templates/search_receipts_list.jinja2 (a new jinja file in the view layer)
 
 
 #### Spark Excercise
