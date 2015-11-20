@@ -42,6 +42,7 @@ def start():
     init_cassandra(app.config['DSE_CLUSTER'].split(','), app.config['KEYSPACE'])
     web.init()
 
+    app.debug = True
     app.run(host='0.0.0.0',
             port=app.config['APPLICATION_PORT'],
             use_reloader=True,

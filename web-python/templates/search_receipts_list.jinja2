@@ -1,0 +1,71 @@
+{% extends "/base.jinja2" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+      Solr Search on Product Name:<br>
+     <div id="solr_div">
+
+    <form action="/web/search-receipts">
+      <input type="text" name="s">
+      <input type="submit" value="Search">
+    </form>
+    </div>
+<br>
+    <section>
+    <div id="facet" style="float:left;width:20%">
+    Narrow Results By:<br><br>
+{% if products %}
+  <b>Product:</b><br>
+
+  {% for p in products %}
+  {% set new_filter_by = 'product_name:"' + p.name + '"'%}
+  {% if filter_by %}
+    {% set new_filter_by = filter_by + " AND " + new_filter_by %}
+  {% endif %}
+
+  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a>&nbsp;( {{ p.amount}} )<br>
+  {% endfor %}
+  <br>
+{% endif %}
+{% if zips %}
+  <b>Zip:</b><br>
+
+  {% for z in zips %}
+  {% set new_filter_by = 'customer_zip:"' + z.customer_zip + '"' %}
+  {% if filter_by %}
+    {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
+  {% endif %}
+
+  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ z.customer_zip }}:</a>&nbsp;{{ z.amount }}<br>
+  {% endfor %}
+{% endif %}
+
+    </div>
+    <div id="list_div" style="float:right;width:80%">
+        <br>
+        {{ receipts.product_name }}
+        <table class="table-striped table-hover">
+        <th>Product</th>
+        <th>Receipt</th>
+        <th>Total</th>
+        <th>Details</th>
+        {% if receipts %}
+            {% for r in receipts %}
+                <tr>
+                <td><a href="/web/product?product_id={{ r.product_id }}">{{ r.product_name }}</a></td>
+
+                <td>{{ r.receipt_timestamp }}</td>
+                <td>{{ r.total }}</td>
+                <td><a href="/web/receipt?receipt_id={{ r.receipt_id }}">details</a></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </table>
+</div>
+</section>
+{% endblock %}
+
+{% block tail %}
+{% endblock %}

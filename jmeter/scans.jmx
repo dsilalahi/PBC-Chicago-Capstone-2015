@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13.1 r1">
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13.2 r1">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -21,7 +21,7 @@
         <stringProp name="username"></stringProp>
       </CassandraConnection>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -122,7 +122,7 @@
           <stringProp name="shareMode">shareMode.thread</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Random number of receipts on this day" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Random number of receipts on this day." enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">${__Random(200, 1000)}</stringProp>
         </LoopController>
@@ -140,6 +140,29 @@
             <stringProp name="filename">../csv/credit_cards.csv</stringProp>
             <stringProp name="fileEncoding"></stringProp>
             <stringProp name="variableNames">credit_card_type,credit_card_number</stringProp>
+            <stringProp name="delimiter">|</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV cust_zip" enabled="true">
+            <stringProp name="filename">../csv/zipcodes.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">cust_zip</stringProp>
+            <stringProp name="delimiter">|</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <stringProp name="TestPlan.comments">customer_zip</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Cust info" enabled="true">
+            <stringProp name="filename">../csv/4000names.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">cust_name</stringProp>
             <stringProp name="delimiter">|</stringProp>
             <boolProp name="quotedData">false</boolProp>
             <boolProp name="recycle">true</boolProp>
@@ -238,8 +261,8 @@
             <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="Insert Scan" enabled="true">
               <stringProp name="batchSize"></stringProp>
               <stringProp name="consistencyLevel">LOCAL_ONE</stringProp>
-              <stringProp name="query">insert into receipts (receipt_id, scan_id, product_id, product_name, quantity, unit_price, total) values (?,now(),?,?,?,?,?)</stringProp>
-              <stringProp name="queryArguments">${receipt_id},${product_id},${o_product_name_1},${qty},${price},${__jexl(${price}*${qty})}</stringProp>
+              <stringProp name="query">insert into receipts (receipt_id, scan_id, product_id, product_name, quantity, unit_price, total,customer_name,customer_zip) values (?,now(),?,?,?,?,?,?,?)</stringProp>
+              <stringProp name="queryArguments">${receipt_id},${product_id},${o_product_name_1},${qty},${price},${__jexl(${price}*${qty})},${cust_name},${cust_zip}</stringProp>
               <stringProp name="queryType">Prepared Statement</stringProp>
               <stringProp name="resultVariable"></stringProp>
               <stringProp name="sessionName">cc</stringProp>
@@ -298,6 +321,17 @@
             <stringProp name="consistencyLevel">LOCAL_ONE</stringProp>
             <stringProp name="query">insert into receipts (credit_card_type, credit_card_number, receipt_timestamp, store_id, register_id, receipt_id, receipt_total) values (?,?,?,?,?,?,?)</stringProp>
             <stringProp name="queryArguments">${credit_card_type},${credit_card_number},${receipt_date} ${receipt_time}-0700,${store_id},${register_id},${receipt_id},${receipt_total}</stringProp>
+            <stringProp name="queryType">Prepared Statement</stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="sessionName">cc</stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </CassandraSampler>
+          <hashTree/>
+          <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="Insert cust_info" enabled="true">
+            <stringProp name="batchSize"></stringProp>
+            <stringProp name="consistencyLevel">LOCAL_ONE</stringProp>
+            <stringProp name="query">insert into customer_details(customer_name, customer_zip) values (?,?)</stringProp>
+            <stringProp name="queryArguments">${cust_name},${cust_zip}</stringProp>
             <stringProp name="queryType">Prepared Statement</stringProp>
             <stringProp name="resultVariable"></stringProp>
             <stringProp name="sessionName">cc</stringProp>
