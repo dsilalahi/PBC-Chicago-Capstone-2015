@@ -38,7 +38,7 @@
     {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
   {% endif %}
 
-  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ z.customer_zip }}:</a>&nbsp;{{ z.customer_zip }}<br>
+  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ z.customer_zip }}:</a>&nbsp;{{ z.amount }}<br>
   {% endfor %}
 {% endif %}
 
