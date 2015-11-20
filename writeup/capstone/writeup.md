@@ -82,7 +82,7 @@ CREATE TABLE retail.credit_card_fraud_list (
 ```
 
 After which the spark code we developed to load the data
-'''
+```
 val receipts_by_creditcard = sc.cassandraTable("retail","receipts_by_credit_card").select("receipt_id","credit_card_number","store_id","receipt_timestamp").keyBy(row => row.getString("store_id"))
 val stores =  sc.cassandraTable("retail","stores").select("store_id","state").keyBy(row => row.getString("store_id"))
 val creditcard_by_store = receipts_by_creditcard.join(stores).persist()
@@ -90,10 +90,10 @@ val creditcard_by_store = receipts_by_creditcard.join(stores).persist()
 //get the credit card that were being used fraudulently (use int two different states)
 val creditcard_fraud= creditcard_by_store.map{ case (store_id,(result1,result2)) => (result1.getString("credit_card_number"),result2.getString("state"))}.distinct.countByKey().filter{ case (k,v) => v > 1}
 sc.parallelize(creditcard_fraud.toList).saveToCassandra("retail","credit_card_fraud_list",SomeColumns("credit_card_number","num_distinct_state"))
-'''
+``
 
 Finally in order to display the data we added the following code in the index.jinja2 template
-'''
+```
 <li>
 	<a href="/gcharts/Table/?url=/api/simplequery&q=select * from credit_card_fraud_list limit 100&order_col=credit_card_number">
 	    Google Charts: Table of Fraudulent Credit Card
@@ -124,7 +124,6 @@ val creditcard_by_store_self_join = creditcard_by_store_unpacked.join(creditcard
 val state2state_fraud = creditcard_by_store_self_join.map{case (store_id,(state1, state2)) => ((state1,state2),store_id)}.filter{ case ((state1,state2),store_id) => state1 != state2}.countByKey().filter{ case (k,v) => v > 1}.map{ case ((state1,state2),num_fraud) => (state1,state2 + "_",num_fraud)}
 val state2state_fraud_filter = state2state_fraud.filter( t= > filter(t._3 > 100))
 sc.parallelize(state2state_fraud_filter.toList).saveToCassandra("retail","state_to_state_fraud",SomeColumns("state1","state2","num_fraud"))
-
 ```
 
 And lastly we updated index.jinja2 template to be able to use the link
@@ -157,8 +156,6 @@ customer_address text,
 primary key((customer_name),customer_zip)
 );
 ```
-
-
 
 #### Modify Jmx file to load customer info:
 
