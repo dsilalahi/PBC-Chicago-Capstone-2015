@@ -4,7 +4,6 @@ The first is in the cql directory that sets up the database schema for the entir
 
 The second part is a sample Spark job
 
-
 The third  part is a sample Solr schema with a script to post it
 
 The fourth part is the web project in the web directory that is a simple Python / Flask project that runs against a local DSE. This expects that you have a local DSE setup and running.
