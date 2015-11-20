@@ -10,8 +10,10 @@
 ## Plan of attack
 The team started off analyzing the existing data model and profiling the data. We went through the existing ddl structure and ran sql queries to get sample result back to get a better understanding of the data. Using this knowledge we brainstormed on how the data model should look like
 
+## Brain Storming
+![BrainStorming](BrainStorming.jpg)
 
-##  Profiling
+## Profiling
 
 As part of this profiling effort we realized that there was some uncertainty on what the message_id field represented. We were unsure whehether message_id is a surrogate key representing a user, mailbox and msgdate. We tried answering this question using cql but ran into timeout issues before a result could be returned. Therefore turned to spark to answer this question for us.
 
@@ -90,9 +92,6 @@ summary:                                 = 119227 in  90.1s = 1323.0/s Avg:    2
 summary:                                 +  44669 in  30.2s = 1477.1/s Avg:    26 Min:     1 Max:   779 Err:     0 (0.00%) Active: 41 Started: 41 Finished: 0
 summary:                                 = 163896 in   120s = 1364.8/s Avg:    21 Min:     0 Max:   779 Err:     0 (0.00%)
 ```
-
-## Brain Storming Ideas
-
 
 ## Data Model
 
@@ -223,6 +222,7 @@ select * from supermail.attachment_header_by_email limit 10;
 
 We updated the Jmeter file to reflect the changes in the data mode. There was increase in the number of transactions we had to do an insert/delete operation since the number of tables had increased. But overall we saw roughly a gain of about a 100% in performance.
 
+The updated disfigured_updated.jmx have been uploaded to the repo
 
 Note: Error reported below were a results of bad data in the test files used.
 
