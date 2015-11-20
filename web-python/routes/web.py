@@ -171,7 +171,7 @@ def search_receipts():
     results = cassandra_helper.session.execute(query)
 
     facet_query = 'SELECT * FROM receipts WHERE solr_query = ' \
-                  '\'{%s,"facet":{"field":["customer_zip","product_name"]}}\' ' % solr_query
+                  '\'{%s,"facet":{"field":["product_name", "customer_zip"]}}\' ' % solr_query
 
     facet_results = cassandra_helper.session.execute(facet_query)
     facet_string = facet_results[0].get("facet_fields")

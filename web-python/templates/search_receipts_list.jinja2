@@ -49,17 +49,17 @@
   <div class="col-sm-9">
         {{ receipts.product_name }}
         <table width="1000" class="table table-striped table-hover">
-        <th>Product</th>
-        <th>Receipt</th>
+        <th>Receipt Id</th>
+        <th>Date/Time</th>
         <th>Total</th>
         <th>Details</th>
         {% if receipts %}
             {% for r in receipts %}
                 <tr>
-                <td><a href="/web/product?product_id={{ r.product_id }}">{{ r.product_name }}</a></td>
+                <td><a href="/web/product?product_id={{ r.receipt_id }}">{{ r.receipt_id }}</a></td>
 
                 <td>{{ r.receipt_timestamp }}</td>
-                <td>{{ r.total }}</td>
+                <td>${{ r.total }}</td>
                 <td><a href="/web/receipt?receipt_id={{ r.receipt_id }}">details</a></td>
                 </tr>
             {% endfor %}
