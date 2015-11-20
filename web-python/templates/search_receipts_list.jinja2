@@ -46,11 +46,11 @@
     <div id="list_div" style="float:right;width:80%">
         <br>
         {{ receipts.product_name }}
-        <table border="1">
+        <table class="table-striped table-hover">
         <th>Product</th>
-
         <th>Receipt</th>
         <th>Total</th>
+        <th>Details</th>
         {% if receipts %}
             {% for r in receipts %}
                 <tr>
