@@ -21,27 +21,29 @@
     <h4>Product:</h4>
 
    <ul class="list-group">
-      {% for p in products %}
-      {% set new_filter_by = 'product_name:"' + p.name + '"'%}
-      {% if filter_by %}
-        {% set new_filter_by = filter_by + " AND " + new_filter_by %}
-      {% endif %}
+        {% for p in products %}
+        {% set new_filter_by = 'product_name:"' + p.name + '"'%}
+        {% if filter_by %}
+            {% set new_filter_by = filter_by + " AND " + new_filter_by %}
+        {% endif %}
         <li class="list-group-item"><span class="badge">{{ p.amount}}</span> <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ p.name }}</a></li>
-      {% endfor %}
+        {% endfor %}
     </ul>
   <br>
 {% endif %}
 {% if zips %}
-  <b>Zip:</b><br>
+    <h4>Zip:</h4>
 
-  {% for z in zips %}
-  {% set new_filter_by = 'customer_zip:"' + z.customer_zip + '"' %}
-  {% if filter_by %}
-    {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
-  {% endif %}
+    <ul class="list-group">
+        {% for z in zips %}
+        {% set new_filter_by = 'customer_zip:"' + z.customer_zip + '"' %}
+        {% if filter_by %}
+            {%   set new_filter_by = filter_by + " AND " + new_filter_by %}
+        {% endif %}
+        <li class="list-group-item"><span class="badge">{{ z.amount }}</span> <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ z.customer_zip }}:</a></li>
+        {% endfor %}
+    </ul>
 
-  <a href="{{ makeURL("/web/search-receipts","s", search_term, "filter_by", new_filter_by) }}">{{ z.customer_zip }}:</a>&nbsp;{{ z.amount }}<br>
-  {% endfor %}
 {% endif %}
 
     </div>
