@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13.2 r1">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <CassandraConnection guiclass="TestBeanGUI" testclass="CassandraConnection" testname="Cassandra Connection" enabled="true">
+        <stringProp name="contactPoints">52.34.84.194</stringProp>
+        <stringProp name="keyspace">stupormail</stringProp>
+        <stringProp name="loadBalancer">Default</stringProp>
+        <stringProp name="localDataCenter"></stringProp>
+        <stringProp name="password"></stringProp>
+        <stringProp name="sessionName">cluster</stringProp>
+        <stringProp name="username"></stringProp>
+      </CassandraConnection>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Readers" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(numUsers,40)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
+        <longProp name="ThreadGroup.start_time">1422604831000</longProp>
+        <longProp name="ThreadGroup.end_time">1422604831000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySamplerProperties">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugPostProcessor>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="All attachments CSV" enabled="true">
+          <stringProp name="delimiter">|</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">attachments.csv</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">username_a,mailbox_a,msgdate_a,message_id_a,filename_a</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="user-mbox CSV" enabled="true">
+          <stringProp name="delimiter">|</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">user-mbox.csv</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">username_i,mailbox_i</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="0: Get mailboxes for a given user" enabled="true">
+          <stringProp name="batchSize"></stringProp>
+          <stringProp name="consistencyLevel">QUORUM</stringProp>
+          <stringProp name="query">select mailbox from supermail.unread_messages_by_user_mailbox where user = ? limit 1000;</stringProp>
+          <stringProp name="queryArguments">${username_i}</stringProp>
+          <stringProp name="queryType">Prepared Statement</stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="sessionName">cluster</stringProp>
+          <stringProp name="variableNames">MAILBOXES</stringProp>
+          <stringProp name="TestPlan.comments">Get email boxes for user</stringProp>
+        </CassandraSampler>
+        <hashTree/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
+        <hashTree>
+          <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="1: Get count of unread" enabled="true">
+            <stringProp name="sessionName">cluster</stringProp>
+            <stringProp name="queryType">Prepared Statement</stringProp>
+            <stringProp name="query">select is_read from supermail.message_read_by_user_mailbox where user = ? and mailbox = ? limit 10000
+</stringProp>
+            <stringProp name="queryArguments">${username_i},${mailbox_i}</stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="consistencyLevel">QUORUM</stringProp>
+            <stringProp name="batchSize"></stringProp>
+          </CassandraSampler>
+          <hashTree/>
+          <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="2: Get 20 most recent in given mailbox" enabled="true">
+            <stringProp name="sessionName">cluster</stringProp>
+            <stringProp name="queryType">Prepared Statement</stringProp>
+            <stringProp name="query">select msgdate, fromlist, message_id,subject from supermail.email_header_by_mailbox where user = ? and mailbox = ?  limit 20
+</stringProp>
+            <stringProp name="queryArguments">${username_i},${mailbox_i}</stringProp>
+            <stringProp name="variableNames">MSGDATE,FROMLIST,MESSAGE_ID,SUBJECT</stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="consistencyLevel">QUORUM</stringProp>
+            <stringProp name="batchSize"></stringProp>
+          </CassandraSampler>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Call process list of msgs" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="764597751">Test Plan</stringProp>
+              <stringProp name="-515827094">Process list of msgs</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Read up to 4 more pages of messages" enabled="true">
+            <boolProp name="LoopController.continue_forever">true</boolProp>
+            <stringProp name="LoopController.loops">4</stringProp>
+          </LoopController>
+          <hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If there are at least 20 in the last result set" enabled="true">
+              <stringProp name="IfController.condition">${MSGDATE_#} == 20</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+            </IfController>
+            <hashTree>
+              <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="4: List the next 20 in the given mailbox" enabled="true">
+                <stringProp name="sessionName">cluster</stringProp>
+                <stringProp name="queryType">Prepared Statement</stringProp>
+                <stringProp name="query">select msgdate, fromlist, message_id,subject from email where user = ? and mailbox=? and (msgdate, message_id) &gt; (?,?) limit 20
+</stringProp>
+                <stringProp name="queryArguments">${username_i},${MAILBOXES_20},${MSGDATE_20},${MESSAGE_ID_20}</stringProp>
+                <stringProp name="variableNames">MSGDATE,FROMLIST,MESSAGE_ID,SUBJECT</stringProp>
+                <stringProp name="resultVariable"></stringProp>
+                <stringProp name="consistencyLevel">QUORUM</stringProp>
+                <stringProp name="batchSize"></stringProp>
+              </CassandraSampler>
+              <hashTree/>
+              <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Call process list of msgs" enabled="true">
+                <collectionProp name="ModuleController.node_path">
+                  <stringProp name="-1227702913">WorkBench</stringProp>
+                  <stringProp name="764597751">Test Plan</stringProp>
+                  <stringProp name="-515827094">Process list of msgs</stringProp>
+                </collectionProp>
+              </ModuleController>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="8: Open the given attachment" enabled="true">
+            <stringProp name="sessionName">cluster</stringProp>
+            <stringProp name="queryType">Prepared Statement</stringProp>
+            <stringProp name="query">select content_type, bytes from supermail.attachments_by_email where user = ? and mailbox = ? and msgdate = ? and message_id = ? and filename = ?
+</stringProp>
+            <stringProp name="queryArguments">${username_a},${mailbox_a},${msgdate_a},${message_id_a},${filename_a}</stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="consistencyLevel">QUORUM</stringProp>
+            <stringProp name="batchSize"></stringProp>
+          </CassandraSampler>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Writers" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1425268873000</longProp>
+        <longProp name="ThreadGroup.end_time">1425268873000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="New Email CSV" enabled="true">
+          <stringProp name="filename">newemail.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">user_ni,mailbox_ni,subject_ni,body_ni</stringProp>
+          <stringProp name="delimiter">|</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Compute New Email ID" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-847868835">new_email_id</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="-940211717">
+              <stringProp name="-1060027248">&lt;${__UUID()}&gt;</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="8a: Write email" enabled="true">
+          <stringProp name="sessionName">cluster</stringProp>
+          <stringProp name="queryType">Prepared Statement</stringProp>
+          <stringProp name="query">update supermail.unread_messages_by_user_mailbox  set unread_count = unread_count + 1 where user = ? and mailbox = ?;</stringProp>
+          <stringProp name="queryArguments">${user_ni},${mailbox_ni}</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="consistencyLevel">QUORUM</stringProp>
+          <stringProp name="batchSize"></stringProp>
+        </CassandraSampler>
+        <hashTree/>
+        <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="8b: Write email" enabled="true">
+          <stringProp name="sessionName">cluster</stringProp>
+          <stringProp name="queryType">Prepared Statement</stringProp>
+          <stringProp name="query">insert into supermail.message_read_by_user_mailbox (user,mailbox,msgdate,message_id,is_read) values (?,?,dateof(now()),?,false);</stringProp>
+          <stringProp name="queryArguments">${user_ni},${mailbox_ni},${new_email_id}</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="consistencyLevel">QUORUM</stringProp>
+          <stringProp name="batchSize"></stringProp>
+        </CassandraSampler>
+        <hashTree/>
+        <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="8c: Write email" enabled="true">
+          <stringProp name="sessionName">cluster</stringProp>
+          <stringProp name="queryType">Prepared Statement</stringProp>
+          <stringProp name="query">insert into supermail.email_header_by_mailbox (user,mailbox,msgdate,message_id,subject) values (?,?,dateof(now()),?,?);</stringProp>
+          <stringProp name="queryArguments">${user_ni},${mailbox_ni},${new_email_id},${subject_ni}</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="consistencyLevel">QUORUM</stringProp>
+          <stringProp name="batchSize"></stringProp>
+        </CassandraSampler>
+        <hashTree/>
+        <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="8d: Write email" enabled="true">
+          <stringProp name="sessionName">cluster</stringProp>
+          <stringProp name="queryType">Prepared Statement</stringProp>
+          <stringProp name="query">insert into supermail.email_content_by_mailbox (user,mailbox,msgdate,message_id,subject,body) values (?,?,dateof(now()),?,?,?);</stringProp>
+          <stringProp name="queryArguments">${user_ni},${mailbox_ni},${new_email_id},${subject_ni},${body_ni}</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="consistencyLevel">QUORUM</stringProp>
+          <stringProp name="batchSize"></stringProp>
+        </CassandraSampler>
+        <hashTree/>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+          <intProp name="calcMode">0</intProp>
+          <doubleProp>
+            <name>throughput</name>
+            <value>3600.0</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+        </ConstantThroughputTimer>
+        <hashTree/>
+      </hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Process list of msgs" enabled="true"/>
+      <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Message" enabled="true">
+          <stringProp name="variableName">RANDOM_MSG</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="maximumValue">19</stringProp>
+          <stringProp name="randomSeed"></stringProp>
+          <boolProp name="perThread">false</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="Get paperclip for each message" enabled="true">
+          <stringProp name="ForeachController.inputVal">MSGDATE</stringProp>
+          <stringProp name="ForeachController.returnVal">ONE_MSGDATE</stringProp>
+          <boolProp name="ForeachController.useSeparator">true</boolProp>
+          <stringProp name="ForeachController.startIndex">0</stringProp>
+          <stringProp name="ForeachController.endIndex">20</stringProp>
+        </ForeachController>
+        <hashTree>
+          <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="3: Determine if msg has attachments" enabled="true">
+            <stringProp name="sessionName">cluster</stringProp>
+            <stringProp name="queryType">Prepared Statement</stringProp>
+            <stringProp name="query">select filename from supermail.attachment_header_by_email where user = ? and mailbox = ? and msgdate = ? limit 1
+</stringProp>
+            <stringProp name="queryArguments">${username_i},${mailbox_i},${ONE_MSGDATE}</stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="consistencyLevel">QUORUM</stringProp>
+            <stringProp name="batchSize"></stringProp>
+            <stringProp name="TestPlan.comments">There is a known flaw here:
+   We left out message ID because it&apos;s complex in jmeter.  Let&apos;s assume each has a unique msgdate</stringProp>
+          </CassandraSampler>
+          <hashTree/>
+        </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Read 3 of the messages" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">3</stringProp>
+        </LoopController>
+        <hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If this message is valid" enabled="true">
+            <stringProp name="IfController.condition">${RANDOM_MSG} &lt; ${MSGDATE_#}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="5: Read one message with body" enabled="true">
+              <stringProp name="sessionName">cluster</stringProp>
+              <stringProp name="queryType">Prepared Statement</stringProp>
+              <stringProp name="query">select msgdate, fromlist, message_id, subject, body from supermail.email_content_by_mailbox where user = ? and mailbox = ? and msgdate = ? and message_id = ?
+</stringProp>
+              <stringProp name="queryArguments">${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})}</stringProp>
+              <stringProp name="variableNames"></stringProp>
+              <stringProp name="resultVariable"></stringProp>
+              <stringProp name="consistencyLevel">QUORUM</stringProp>
+              <stringProp name="batchSize"></stringProp>
+            </CassandraSampler>
+            <hashTree/>
+            <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="6a: Mark message as read" enabled="true">
+              <stringProp name="sessionName">cluster</stringProp>
+              <stringProp name="queryType">Prepared Statement</stringProp>
+              <stringProp name="query">update supermail.message_read_by_user_mailbox set is_read = true where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+</stringProp>
+              <stringProp name="queryArguments">${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})}</stringProp>
+              <stringProp name="variableNames"></stringProp>
+              <stringProp name="resultVariable"></stringProp>
+              <stringProp name="consistencyLevel">QUORUM</stringProp>
+              <stringProp name="batchSize"></stringProp>
+            </CassandraSampler>
+            <hashTree/>
+            <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="6b: Mark message as read" enabled="true">
+              <stringProp name="sessionName">cluster</stringProp>
+              <stringProp name="queryType">Prepared Statement</stringProp>
+              <stringProp name="query">update supermail.unread_messages_by_user_mailbox  set unread_count = unread_count - 1 where user = ? and mailbox = ?;</stringProp>
+              <stringProp name="queryArguments">${username_i},${mailbox_i}</stringProp>
+              <stringProp name="variableNames"></stringProp>
+              <stringProp name="resultVariable"></stringProp>
+              <stringProp name="consistencyLevel">QUORUM</stringProp>
+              <stringProp name="batchSize"></stringProp>
+            </CassandraSampler>
+            <hashTree/>
+            <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="7: List the atts for the given message" enabled="true">
+              <stringProp name="sessionName">cluster</stringProp>
+              <stringProp name="queryType">Prepared Statement</stringProp>
+              <stringProp name="query">select filename from supermail.attachment_header_by_email where user = ? and mailbox = ? and msgdate = ? and message_id = ?
+</stringProp>
+              <stringProp name="queryArguments">${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})}</stringProp>
+              <stringProp name="variableNames"></stringProp>
+              <stringProp name="resultVariable"></stringProp>
+              <stringProp name="consistencyLevel">QUORUM</stringProp>
+              <stringProp name="batchSize"></stringProp>
+            </CassandraSampler>
+            <hashTree/>
+            <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Delete that message 5% of the time" enabled="true">
+              <intProp name="ThroughputController.style">1</intProp>
+              <boolProp name="ThroughputController.perThread">true</boolProp>
+              <intProp name="ThroughputController.maxThroughput">1</intProp>
+              <FloatProperty>
+                <name>ThroughputController.percentThroughput</name>
+                <value>5.0</value>
+                <savedValue>0.0</savedValue>
+              </FloatProperty>
+            </ThroughputController>
+            <hashTree>
+              <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="9a: Delete the given message" enabled="true">
+                <stringProp name="sessionName">cluster</stringProp>
+                <stringProp name="queryType">Prepared Statement</stringProp>
+                <stringProp name="query">begin unlogged batch
+delete from supermail.message_read_by_user_mailbox where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+delete from supermail.email_header_by_mailbox where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+delete from supermail.email_content_by_mailbox where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+delete from supermail.attachments_by_email where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+delete from supermail.attachment_header_by_email where user = ? and mailbox = ? and msgdate = ? and message_id = ?;
+apply batch</stringProp>
+                <stringProp name="queryArguments">${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})},${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})}</stringProp>
+                <stringProp name="variableNames"></stringProp>
+                <stringProp name="resultVariable"></stringProp>
+                <stringProp name="consistencyLevel">QUORUM</stringProp>
+                <stringProp name="batchSize"></stringProp>
+              </CassandraSampler>
+              <hashTree/>
+              <CassandraSampler guiclass="TestBeanGUI" testclass="CassandraSampler" testname="9b: Delete the given message" enabled="true">
+                <stringProp name="sessionName">cluster</stringProp>
+                <stringProp name="queryType">Prepared Statement</stringProp>
+                <stringProp name="query">delete from supermail.unread_messages_by_user_mailbox where user = ? and mailbox = ?; </stringProp>
+                <stringProp name="queryArguments">${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})},${username_i},${mailbox_i},${__V(MSGDATE_${RANDOM_MSG})},${__V(MESSAGE_ID_${RANDOM_MSG})}</stringProp>
+                <stringProp name="variableNames"></stringProp>
+                <stringProp name="resultVariable"></stringProp>
+                <stringProp name="consistencyLevel">QUORUM</stringProp>
+                <stringProp name="batchSize"></stringProp>
+              </CassandraSampler>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
