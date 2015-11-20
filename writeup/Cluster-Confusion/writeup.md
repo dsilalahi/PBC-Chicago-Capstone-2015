@@ -1,11 +1,9 @@
 # Cluster-Confusion
 
 #### Team
-<ol>
-        <li> Hamdan Ahmad </li>
-        <li> Dohar Silalahi </li>
-        <li> Ravi Akkineni </li>
-</ol>
+* Hamdan Ahmad
+* Dohar Silalahi
+* Ravi Akkineni
 
 ## Purpose
 
