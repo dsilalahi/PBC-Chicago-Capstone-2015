@@ -95,7 +95,11 @@ summary:                                 = 163896 in   120s = 1364.8/s Avg:    2
 
 ## Data Model
 
-Here is the data model that was used. 
+Here is the data model that was created. We started off with the goal of having one table per query. However we used up opportunities where the tables could be merged inorder to support more than one query with a signel table, this was done while keeping in mind the tradeoff between performance and maintainability of the data model.
+
+The final solution ended up having 5 tables to support all queries.
+
+Once of the key things we wanted to do (after reviewing the queries and the data) was to separate large fields that were queries by only a single from a table that other queries were using. Hence attachment and body got their own table.
 
 ```sql
 DROP KEYSPACE supermail;
@@ -104,9 +108,11 @@ DROP KEYSPACE supermail;
 CREATE KEYSPACE supermail WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
 -- Query0, Query1
--- Wanted to merge this table with supermail.message_read_by_user_mailbox
--- But when we trying to do that realized the cql does not support sum on cql at this time and therefore could not do this merge.
+-- Separate this table from supermail.message_read_by_user_mailbox After realizing that
+-- cql does not support sum on cql at this time and therefore could not do this merge.
 -- Instead we decided to go with a counter table knowing that there are cases where counters are known to cause inconsistency
+-- in cases where a node goes down and replays the counter. We felt given our use case 100% consistency was not neccessary 
+-- and decided to go with simplicity instead
 CREATE TABLE supermail.unread_messages_by_user_mailbox (
     user text,
     mailbox text,
@@ -115,6 +121,7 @@ CREATE TABLE supermail.unread_messages_by_user_mailbox (
 );
 
 --Query6
+-- this table stores the email content at a high level (not  including body) keep it small and yet quick to query with
 CREATE TABLE supermail.message_read_by_user_mailbox (
 	user text,
 	mailbox text,
@@ -136,7 +143,8 @@ CREATE TABLE supermail.email_header_by_mailbox (
 ) WITH CLUSTERING ORDER BY  (msgdate DESC,message_id ASC);
 
 -- query 5 
--- We could potentially merge this tabke with email_header_by_mailbox
+-- We could potentially merge this tabke with email_header_by_mailbox if we needed to further enchance performance incase 
+-- the table was too small.
 CREATE TABLE supermail.email_content_by_mailbox (
 	user text,
 	mailbox text,
@@ -153,6 +161,7 @@ CREATE TABLE supermail.email_content_by_mailbox (
 ) WITH CLUSTERING ORDER BY (mailbox ASC, msgdate DESC, message_id ASC);
 
 --Query 8
+--The following two tables were created using the attachment table. The table below contains the the attachment itself as a --blob and the one below is the header. The separation allowed us to query the header column much faster and we expect in most cases this table would be queries more often than the other one
 CREATE TABLE supermail.attachments_by_email (
 	user text,
 	mailbox text,
